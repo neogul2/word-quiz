@@ -43,10 +43,14 @@ export default function Home() {
 
     // 학습 세션 저장
     const session: StudySession = {
+      id: `session-${Date.now()}`,
       chapter: 1,
       date: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
       words,
-      targetTime: targetTime
+      targetTime: targetTime,
+      isReview: false,
+      wrongDirections: []
     };
 
     // localStorage에 데이터 저장

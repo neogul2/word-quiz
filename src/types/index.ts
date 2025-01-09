@@ -24,9 +24,9 @@ export interface QuizResult {
 
 // 학습 세션(Chapter) 타입
 export interface StudySession {
-  id: string;
+  id?: string;
   words: Word[];
-  createdAt: string;
+  createdAt?: string;
   isReview?: boolean;
   wrongDirections?: { wordId: string; direction: 'engToKor' | 'korToEng' }[];
   chapter: number;
