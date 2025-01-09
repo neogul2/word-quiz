@@ -29,4 +29,7 @@ export interface StudySession {
   createdAt: string;
   isReview?: boolean;
   wrongDirections?: { wordId: string; direction: 'engToKor' | 'korToEng' }[];
+  chapter: number;
+  date: string;
+  targetTime: number;
 } 
