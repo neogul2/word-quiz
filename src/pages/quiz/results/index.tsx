@@ -117,15 +117,14 @@ export default function QuizResults() {
     const wrongAnswers = getWrongAnswers();
     
     // 각 단어의 틀린 방향에 대한 퀴즈 정보 생성
-    const wrongDirections = wrongAnswers.flatMap(wa => {
-      const directions: { wordId: string; direction: 'engToKor' | 'korToEng' }[] = [];
+    const wrongDirections: { wordId: string; direction: 'engToKor' | 'korToEng' }[] = [];
+    wrongAnswers.forEach(wa => {
       if (wa.engToKorWrong) {
-        directions.push({ wordId: wa.word!.id, direction: 'engToKor' });
+        wrongDirections.push({ wordId: wa.word!.id, direction: 'engToKor' });
       }
       if (wa.korToEngWrong) {
-        directions.push({ wordId: wa.word!.id, direction: 'korToEng' });
+        wrongDirections.push({ wordId: wa.word!.id, direction: 'korToEng' });
       }
-      return directions;
     });
 
     if (wrongDirections.length === 0) return;
@@ -135,12 +134,24 @@ export default function QuizResults() {
       .map(id => wrongAnswers.find(wa => wa.word?.id === id)?.word)
       .filter((word): word is Word => !!word);
 
+    // currentSession을 더 안전하게 가져오기
+    const sessionData = localStorage.getItem('currentSession');
+    if (!sessionData) {
+      console.error('현재 세션을 찾을 수 없습니다.');
+      return;
+    }
+
+    const currentSession = JSON.parse(sessionData) as StudySession;
+
     const newSession: StudySession = {
       id: Date.now().toString(),
       words: wrongWords,
       createdAt: new Date().toISOString(),
+      date: new Date().toISOString(),
       isReview: true,
-      wrongDirections // 틀린 방향 정보 추가
+      wrongDirections,
+      chapter: currentSession.chapter ?? 1, // null 병합 연산자 사용
+      targetTime: currentSession.targetTime ?? 10 // null 병합 연산자 사용
     };
 
     localStorage.removeItem('englishToKorean');
