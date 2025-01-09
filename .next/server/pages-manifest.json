@@ -1,0 +1,9 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/quiz/korean-english": "pages/quiz/korean-english.js",
+  "/quiz/english-korean": "pages/quiz/english-korean.js",
+  "/quiz/results": "pages/quiz/results.js"
+}
